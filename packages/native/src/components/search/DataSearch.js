@@ -157,10 +157,16 @@ class DataSearch extends Component {
 			};
 		}
 
-		if (value === '') {
+		if (value === '' && !props.noInitialQuery) {
 			finalQuery = {
 				match_all: {},
 			};
+		}
+		
+		if(value == '' && props.noInitialQuery) {
+		  finalQuery = {
+		    match_none: {},
+		  }
 		}
 
 		return finalQuery;
@@ -627,10 +633,12 @@ DataSearch.propTypes = {
 	theming: types.style,
 	innerStyle: types.style,
 	innerProps: types.props,
+	noInitialQuery: types.bool,
 };
 
 DataSearch.defaultProps = {
 	placeholder: 'Search',
+	noInitialQuery: false,
 	showIcon: true,
 	iconPosition: 'left',
 	autoFocus: false,
